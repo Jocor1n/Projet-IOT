@@ -7,10 +7,20 @@ from azure.cognitiveservices.vision.computervision.models import OperationStatus
 import time
 import csv
 import re
+<<<<<<< HEAD
 
 #Region et API Azure
 region = 'westeurope'
 key = '<key>'
+=======
+from dotenv import load_dotenv
+
+load_dotenv()  
+
+#Region et API Azure
+region = 'westeurope'
+key = os.getenv('API_KEY')
+>>>>>>> 4b0ff62 (new commit)
 
 #Identifiants API Azure
 credentials = CognitiveServicesCredentials(key)
