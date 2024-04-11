@@ -237,11 +237,11 @@ def add_device_to_TTN(ip_serv, dev_addr, dev_eui, apps_key, nets_key, app_key):
         print("REGISTER JOIN SERVER")
         print(response.text)
     
-    # Check if the response was successful
+    # Vérifie si la réponse a été réussie.
     if response2.status_code == 200:
         device_info = response2.json()
     
-        # Check if the 'end_devices' key exists in the response
+        # Vérifie si la clé 'end_devices' est présente dans la réponse.
         if 'end_devices' in device_info:
             device_ids = [device['ids']['device_id'] for device in device_info['end_devices']]
     
@@ -250,7 +250,7 @@ def add_device_to_TTN(ip_serv, dev_addr, dev_eui, apps_key, nets_key, app_key):
             else: 
                add_to_TTN()
         else:
-           #Signifie qu'il n'y a aucun device de créé
+           # Signifie qu'il n'y a aucun device de créé
            add_to_TTN()
     else:
         print("Failed to retrieve device information. Status code:", response2.status_code)
