@@ -23,6 +23,7 @@ Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La p
 - le smartphone et le pc éxecutant le code doivent être sur le même réseau internet
 - installation de différents package (à voir dans le II)
 - Un compte Azure
+- Git d'installé
   
 ## II. Partie photo et transcription au format CSV 
 
@@ -56,10 +57,18 @@ pip install -r requirements.txt
 ```
 #### Clone du projet Git
 
-Vous pouvez cloner le projet en utilisant la commande :
+Vous pouvez cloner le projet Git en utilisant la commande :
 
 ```shell
-git clone ...
+git init
+git clone https://github.com/Jocor1n/Projet-IOT.git 
+```
+
+Ou avec SSH :
+
+```shell
+git init
+git clone git@github.com:Jocor1n/Projet-IOT.git
 ```
 
 #### Application :
@@ -85,16 +94,38 @@ csv_file_path=REPERTOIRE_FICHIER_CSV
 app_name=NOM_APPLICATION_TTN
 ```
 
-### b. Fonctionnement 
-- comment ça fonctionne (dans les grandes lignes) ?
-- ....
-
 ## III. Partie envoi des données CSV sur TTN avec REST 
-- explication brève du code
-- présentation des éléments enregitrés sur le TTS. 
-- autres ? 
+- Explication brève du code...
+
+Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
+  
+* DevEUI : il s'agit d'un identifiant qui rend chaque objet normalement programmé en usine unique. Il n'est pas possible de modifier ce paramètre théoriquement
+* AppKey : il s'agit d'un secret partagé entre le périphérique et le réseau, qui sert à dériver les clés de session. Ce paramètre est sujet à modification.
+* DevAddr (Device Address) : une adresse logique de 32 bits utilisée pour repérer l'objet dans le réseau, présente dans chaque trame.
+* NetSKey (Network Session Key) : clé de chiffrement AES-128 partagée entre l’objet et le serveur de l'opérateur,
+* AppSKey (Application Session Key) : clé de chiffrement AES-128 partagée entre l’objet et l'utilisateur (via l'application).
+* APP EUI : Identifiant d'application global dans l'espace d'adressage IEEE EUI64 qui identifie le serveur de jointure lors de l'activation par voie hertzienne.
 
 ## IV. Méthode d'utilisation 
 
-- Pour enregistrer un device, il faut avoir l'application IP Webcam d'ouvert avec le serveur démarré. Une fois démarré, vous pouv
+- Pour enregistrer un device, il faut avoir l'application IP Webcam d'ouvert avec le serveur démarré. Une fois démarré, vous pouvez exécuter le programme principal sur l'environnement virtuel :
+  
+```shell
+Image_recognition_csv.py
+```
 
+Ensuite 3 commandes sont disponibles : 
+
+* ALT + s : Enregistrer un device en ayant la photo en temps réel sur le téléphone.
+![image_78](https://github.com/Jocor1n/Projet-IOT/assets/75179590/a7a2a129-d97b-4dd0-91b2-ada27f10412c)
+* ALT + r : Lire le fichier csv
+Exemple :
+```shell
+Device ID: 01823582
+Device EUI: A840418181823582
+Application EUI: 8000000000000007
+Application Key: 6D188E6C8487FA39D26D3BE6D22D2B5E
+Network Session Key 563D2F53974383C53C2FBC168AF7BE22
+Application Session Key 8616495CDC8AE76A5AFFB19E2FE19B6C
+```
+* ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
