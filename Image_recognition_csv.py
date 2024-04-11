@@ -7,12 +7,8 @@ from azure.cognitiveservices.vision.computervision.models import OperationStatus
 import time
 import csv
 import re
-<<<<<<< HEAD
+import original
 
-#Region et API Azure
-region = 'westeurope'
-key = '<key>'
-=======
 from dotenv import load_dotenv
 
 load_dotenv()  
@@ -20,7 +16,8 @@ load_dotenv()
 #Region et API Azure
 region = 'westeurope'
 key = os.getenv('API_KEY')
->>>>>>> 4b0ff62 (new commit)
+ip_serv = os.getenv('ip_serv_TTN')
+ip_serv_webcam = os.getenv('ip_serv_webcam')
 
 #Identifiants API Azure
 credentials = CognitiveServicesCredentials(key)
@@ -30,14 +27,14 @@ client = ComputerVisionClient(
 )
 
 # Adresse IP de la webcam
-url = "http://192.168.137.82:8080/video"
+url = f"http://{ip_serv_webcam}/video"
 
 # Capture vidéo
 cap = cv2.VideoCapture(url)
 
 # Répertoire d'installation pour enregistrer les images et le fichier csv
-installation_directory = r"D:\Users\user\Documents\OCR\images" 
-csv_file_path = "D:/Users/user/Documents/OCR/test.csv"  
+installation_directory = os.getenv('image_directory')
+csv_file_path = os.getenv('csv_file_path')
 
 # Vérifier si le répertoire existe, sinon le créer
 if not os.path.exists(installation_directory):
@@ -112,7 +109,7 @@ def extract_text_and_save_to_csv(image_path, csv_file_path):
 
 # Fonction pour enregistrer l'image lorsque la combinaison de touches 'ctrl' + 's' est pressée
 def save_image(e):
-    if e.event_type == 'down' and e.name == 's' and keyboard.is_pressed('ctrl'):
+    if e.event_type == 'down' and e.name == 's' and keyboard.is_pressed('alt'):
         image_path = os.path.join(installation_directory, "image.png")
         counter = 1
         while os.path.exists(image_path):
@@ -123,7 +120,7 @@ def save_image(e):
         extract_text_and_save_to_csv(image_path, csv_file_path)  # Appeler la fonction pour extraire le texte de l'image après avoir enregistré l'image
 
 def read_lines_csv(e):
-    if e.event_type == 'down' and e.name == 'r' and keyboard.is_pressed('ctrl'):
+    if e.event_type == 'down' and e.name == 'r' and keyboard.is_pressed('alt'):
         # Initialize a list to store device data
         device_data_list = []
         
@@ -160,10 +157,44 @@ def read_lines_csv(e):
             print("Application Key:", device_data['application_key'])
             print("Network Session Key", device_data['network_session_key'])  # Add a newline between each device's data
             print("Application Session Key", device_data['application_session_key'])
+            
+def add_TTN(e):
+    if e.event_type == 'down' and e.name == 'a' and keyboard.is_pressed('alt'):
+        device_data_list = []
         
+        # Open the CSV file and read the data
+        with open(csv_file_path, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Extract data from the current row
+                device_id = row['DEV ADDR']
+                device_eui = row['DEV EUI']
+                application_eui = row['APP EUI']
+                application_key = row['APP KEY']
+                network_session_key = row['NETSKEY']
+                application_session_key = row['APPSKEY']
+                
+                # Store the data in a dictionary
+                device_data = {
+                    'device_id': device_id,
+                    'device_eui': device_eui,
+                    'application_eui': application_eui,
+                    'application_key': application_key,
+                    'network_session_key': network_session_key,
+                    'application_session_key': application_session_key
+                }
+                
+                # Add the device data to the list
+                device_data_list.append(device_data)
+        
+        # Display the extracted data (optional) 
+        for device_data in device_data_list:
+            original.add_device_to_TTN(ip_serv, device_data['device_id'], device_data['device_eui'], device_data['application_session_key'], device_data['network_session_key'],  device_data['application_key'])
+                          
 # Connecter l'événement clavier à la fonction pour enregistrer l'image
 keyboard.on_press(save_image)
 keyboard.on_press(read_lines_csv)
+keyboard.on_press(add_TTN)
 
 while True:
     # Capture d'une trame de la webcam

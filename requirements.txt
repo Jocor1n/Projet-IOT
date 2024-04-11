@@ -1,0 +1,5 @@
+azure-cognitiveservices-vision-computervision
+keyboard
+opencv-python
+requests
+python-dotenv
