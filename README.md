@@ -94,14 +94,17 @@ csv_file_path=REPERTOIRE_FICHIER_CSV
 app_name=NOM_APPLICATION_TTN
 ```
 
-### b. Fonctionnement 
-- comment ça fonctionne (dans les grandes lignes) ?
-- ....
-
 ## III. Partie envoi des données CSV sur TTN avec REST 
-- explication brève du code
-- présentation des éléments enregitrés sur le TTS. 
-- autres ? 
+- Explication brève du code...
+
+Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
+  
+* DevEUI : il s'agit d'un identifiant qui rend chaque objet normalement programmé en usine unique. Il n'est pas possible de modifier ce paramètre théoriquement
+* AppKey : il s'agit d'un secret partagé entre le périphérique et le réseau, qui sert à dériver les clés de session. Ce paramètre est sujet à modification.
+* DevAddr (Device Address) : une adresse logique de 32 bits utilisée pour repérer l'objet dans le réseau, présente dans chaque trame.
+* NetSKey (Network Session Key) : clé de chiffrement AES-128 partagée entre l’objet et le serveur de l'opérateur,
+* AppSKey (Application Session Key) : clé de chiffrement AES-128 partagée entre l’objet et l'utilisateur (via l'application).
+* APP EUI : Identifiant d'application global dans l'espace d'adressage IEEE EUI64 qui identifie le serveur de jointure lors de l'activation par voie hertzienne.
 
 ## IV. Méthode d'utilisation 
 
