@@ -9,6 +9,7 @@ import csv
 import re
 import Register_device
 import datetime
+from matplotlib import pyplot as plt
 
 from dotenv import load_dotenv
 
@@ -26,12 +27,6 @@ client = ComputerVisionClient(
     endpoint="https://" + region + ".api.cognitive.microsoft.com/",
     credentials=credentials
 )
-
-# Adresse IP de la webcam
-url = f"http://{ip_serv_webcam}/video"
-
-# Capture vidéo
-cap = cv2.VideoCapture(url)
 
 # Répertoire d'installation pour enregistrer les images et les fichiers csv
 installation_directory = os.getenv('image_directory')
@@ -226,7 +221,7 @@ def get_app_devices(e):
                     'created_at': device['created_at'],
                     'updated_at': device['updated_at']
                 })
-        print("Les données ont été enregistrées dans 'devices.csv'")
+        print("Les données ont été enregistrées dans le csv")
 
 # Connecter l'événement clavier à la fonction pour enregistrer l'image
 keyboard.on_press(save_image)
@@ -241,10 +236,39 @@ print("ALT + s : Enregistrer un device en ayant la photo en temps réel sur le t
   "ALT + v : Synchroniser les images du dossier des images\n" +
   "ALT + g : Récupérer les devices de l'application dans un csv")
 
+# Adresse IP de la webcam
+url = f"http://{ip_serv_webcam}/video"
+fig = plt.figure()
+
+# Capture vidéo
+ip_serv_webcam = os.getenv('use_webcam')
+
+#Tester de si on utilise une webcam
+if ip_serv_webcam == "TRUE":
+    cap = cv2.VideoCapture(0)
+else:
+    cap = cv2.VideoCapture(url)
+    
+# Créer une sous-fenêtre pour afficher l'image
+ax = fig.add_subplot(111)
+
 while True:
     # Capture d'une trame de la webcam       
     ret, frame = cap.read()
 
+    # Si la trame est correctement reçue
+    if ret:
+        # Effacer la sous-fenêtre
+        ax.clear()
+        # Afficher la nouvelle image
+        ax.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        # Mettre à jour la figure
+        plt.draw()
+        # Rendre la figure visible
+        plt.pause(0.001)
+    if keyboard.is_pressed('q'):
+        break
+
+        
 # Libérer la capture
 cap.release()
-cv2.destroyAllWindows()  # Fermer toutes les fenêtres OpenCV
