@@ -14,14 +14,14 @@
 ## I. Présentation 
 
 Cette procédure présente comment utiliser le code qui permet de prendre une photo d'une étiquette d'un device et de retranscrire au fortmat CSV les informations de celui-ci. Puis, il permet d'enregistrer le device défini dans le fichier CSV sur le network server (NS) TTN.
-Le NS utilisé ici, est un serveur TTS construit et fourni par Sylvain Montagny. Cependant, la requête utilisé pour enregistrer le device peut être utilisé sur un NS publique : TTN. 
+Le NS utilisé ici, est un serveur TTS construit et fourni par Sylvain Montagny. Cependant, la requête utilisée pour enregistrer le device peut être également appliquée sur un NS publique : TTN. 
 Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La première est la prise d'une photo de l'étiquette à l'aide d'un smartphone et sa transcription au format CSV. La seconde est la récupération des informations dans le fichier CSV et l'enregistrement du device sur TTS sur à l'aide de l'api REST.
 
 **PREREQUIS :** 
 - Utilitaire pour executer du code python (minimum version 3.8) 
 - Network Server TTS ou TTN 
-- le smartphone et le pc éxecutant le code doivent être sur le même réseau internet
-- installation de différents package (à voir dans le II)
+- Le smartphone et le pc éxecutant le code doivent être sur le même réseau internet
+- Installation de différents package (à voir dans le II)
 - Un compte Azure
 - Git d'installé
 - Installation de l'application IP Webcam
@@ -29,10 +29,10 @@ Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La p
 ## II. Partie photo et transcription au format CSV 
 
 #### Création de l'environnement virtuel :
-- Créer un dossier de travail sur l'explorateur de fichier
+- Créez un dossier de travail sur l'explorateur de fichier
 
-- Ouvrez votre terminal.
-Placez-vous dans le répertoire de travail, où vous souhaitez créer l'environnement virtuel.
+- Ouvrez un terminal.
+Se placer dans le répertoire de travail, où vous souhaitez créer l'environnement virtuel.
 
 Utilisez la commande suivante pour créer l'environnement virtuel :
 ```shell
@@ -66,15 +66,15 @@ Ou avec SSH :
 ```shell
 git clone git@github.com:Jocor1n/Projet-IOT.git
 ```
-Ensuite vous pouvez télécharger et installer les dépendances requises, exécutez la commande suivante dans votre terminal :
+Ensuite vous pouvez télécharger et installer les dépendances requises en exécutant la commande suivante dans votre terminal :
 
 ```shell
 pip install -r requirements.txt
 ```
 #### Application :
-Il faut que votre ordinateur et votre téléphone soit sur le même réseau Internet, si ce n'est pas le cas, mettez votre ordinateur en point d'accès sans fil mobile et connecter votre téléphone sur ce même réseau.
-Sur votre téléphone, installer l'application **IP Webcam**.
-Une fois lancée, cliquer sur démarrer le serveur, récupérer l'IP et le port utilisé pour plus tard.
+Il faut que votre ordinateur et votre téléphone soit sur le même réseau Internet, si ce n'est pas le cas, mettez votre ordinateur en point d'accès sans fil mobile et connectez votre téléphone sur ce même réseau.
+Sur votre téléphone, installez l'application **IP Webcam**.
+Une fois lancée, cliquez sur démarrer le serveur, récupérez l'IP et le port utilisé pour plus tard.
 
 #### Azure : 
 
@@ -83,11 +83,11 @@ Une fois sélectionnée, créer une vision par ordinateur.
 
 ![azurevision](https://github.com/Jocor1n/Projet-IOT/assets/166696882/2de32d21-463c-4716-a8dc-1002b258d3e3)
 
-Remplissez tout d'abord, les détails du projet en choisissant un abonnement (student) et un groupe de ressources (créer un nouveau si besoin). Puis choisir les détails de l'instance avec une région (west europe) et un nom (à choisir).
+Remplissez tout d'abord, les détails du projet en choisissant un abonnement (student) et un groupe de ressources (créer un nouveau si besoin). Ensuite, choisir les détails de l'instance avec une région (west europe) et un nom (à choisir).
 
 ![crea_new_vision](https://github.com/Jocor1n/Projet-IOT/assets/166696882/33f1f49c-3e6c-4fcd-920d-de4ad8aff124)
 
-Pour le niveau tarifaire, dans notre cas, on va utiliser la version gratuite où vous pouvez faire 20 appels par minute et 5 mille appels par mois avec cette API. Ce qui est largement suffisant. 
+Pour le niveau tarifaire, dans notre cas, nous avons utilisé la version gratuite où vous pouvez faire 20 appels par minute et 5 mille appels par mois avec cette API. Ce qui est largement suffisant. 
 
 Vous devriez voir apparaître la région et surtout la clé API, nécessaire au fonctionnement de notre code. Comme ceci :
 
@@ -95,7 +95,11 @@ Vous devriez voir apparaître la région et surtout la clé API, nécessaire au 
 
 Pour savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
 
-#### Créer un fichier .env (dans le même répertoire que le code téléchargé depuis git) et rajouter ces variables :
+#### Créez un dossier images :
+
+Dans le dossier du projet, créer un dossier "images".
+
+#### Créez un fichier .env (dans le même répertoire que le code téléchargé depuis git) et rajoutez ces variables :
 ```shell
 API_KEY=VOTRE_API_KEY # CLE 1 sur Azure
 auth_token=VOTRE_AUTH_TOKEN_TTN # Clé API de l'application sur TTN
@@ -108,7 +112,7 @@ app_name=NOM_APPLICATION_TTN # nom de l'application sur votre serveur TTN
 use_webcam=<TRUE or FALSE> # mettre TRUE si utilisation de la webcam 
 ```
 
-Clé API TTN : ATTENTION la clé API n'est visible qu'une seule fois lors de sa création !
+Clé API TTN : ATTENTION la clé API n'est visible qu'une seule fois lors de sa création !!!
 
 ![apikey](https://github.com/Jocor1n/Projet-IOT/assets/166696882/60d301cd-4a0b-4f89-9d61-6584b897145e)
 
@@ -145,11 +149,11 @@ Enfin, le script inclut également une gestion des erreurs pour vérifier si l'a
 
 - Pour enregistrer un device, il faut avoir l'application IP Webcam d'ouvert ou une webcam avec le serveur démarré.
 
-**ATTENTION :** si vous utilisez une webcam selon le type, le focus peut être long à ce faire, cliquer sur l'image affiché à l'écran avec la souris pour le focus.
+**ATTENTION :** si vous utilisez une webcam selon le type, le focus peut être long à se faire, cliquez sur l'image affichée à l'écran avec la souris pour le focus.
 
-**À Savoir :** Les images peuvent être prise indpendament et ajouté au dossier "\images" manuellement. Le code interprétera ensuite ces images. 
+**À Savoir :** Les images peuvent être prises indpendament et ajoutées au dossier "\images" manuellement. Le code interprétera ensuite ces images. 
 
-- Une fois démarré, vous pouvez exécuter le programme principal sur l'environnement virtuel :
+- Une fois l'application démarrée, vous pouvez exécuter le programme principal sur l'environnement virtuel :
   
 ```shell
 Image_recognition_csv.py
