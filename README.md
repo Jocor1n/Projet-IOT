@@ -105,12 +105,8 @@ Documentation sur les [API TTN](https://www.thethingsindustries.com/docs/api/)
 - Utilisation des requêtes REST GET pour récupérer les données de TTN :
   - [GET devices](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{application_ids.application_id}devices-get)
 
-Éléments enregitrés sur le TTS pour OTAA via CSV :
-
 Le fichier Register_device.py permet d'enregistrer un device LoraWAN sur un Network Server en utilisant l'API TTN (The Things Network).  Il comprend des fonctions pour créer l'appareil, l'enregistrer sur le name server, l'application server et le serveur de join (network server).
-
 L'enregistrement du device sur le name server est une étape importante du processus d'enregistrement d'appareils sur TTN. Il permet au network server (join server) et à l'application server d'identifier le device et de communiquer avec lui.
-
 Le script comprend également une fonction pour ajouter le périphérique à TTN, qui vérifie si le périphérique existe déjà et le crée si ce n'est pas le cas.
 
 Ce script utilise la bibliothèque requests pour effectuer des requêtes HTTP à l'API TTN et la bibliothèque json pour sérialiser les données. Il utilise également des variables d'environnement pour stocker des informations sensibles telles que le nom de l'application, le jeton d'authentification et diverses clés.
