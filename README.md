@@ -95,9 +95,6 @@ Vous devriez voir apparaître la région et surtout la clé API, nécessaire au 
 
 Pour savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
 
-#### Créez un dossier images :
-
-Dans le dossier du projet, créer un dossier "images".
 
 #### Créez un fichier .env (dans le même répertoire que le code téléchargé depuis git) et rajoutez ces variables :
 ```shell
