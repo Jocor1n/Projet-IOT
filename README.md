@@ -60,14 +60,12 @@ pip install -r requirements.txt
 Vous pouvez cloner le projet Git en utilisant la commande :
 
 ```shell
-git init
 git clone https://github.com/Jocor1n/Projet-IOT.git 
 ```
 
 Ou avec SSH :
 
 ```shell
-git init
 git clone git@github.com:Jocor1n/Projet-IOT.git
 ```
 
