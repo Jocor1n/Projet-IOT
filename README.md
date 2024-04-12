@@ -15,7 +15,7 @@
 
 Cette procédure présente comment utiliser le code qui permet de prendre une photo d'une étiquette d'un device et de retranscrire au fortmat CSV les informations de celui-ci. Puis, il permet d'enregistrer le device défini dans le fichier CSV sur le network server (NS) TTN.
 Le NS utilisé ici, est un serveur TTS construit et fourni par Sylvain Montagny. Cependant, la requête utilisé pour enregistrer le device peut être utilisé sur un NS publique : TTN. 
-Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La première et la prise d'une photo de l'étiquette à l'aide d'un smartphone et sa transcription au format CSV. La seconde est la récupération des informations dans le fichier CSV et l'enregistrement du device sur TTS sur à l'aide de l'api REST.
+Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La première est la prise d'une photo de l'étiquette à l'aide d'un smartphone et sa transcription au format CSV. La seconde est la récupération des informations dans le fichier CSV et l'enregistrement du device sur TTS sur à l'aide de l'api REST.
 
 **PREREQUIS :** 
 - Utilitaire pour executer du code python (minimum version 3.8) 
@@ -24,10 +24,10 @@ Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La p
 - installation de différents package (à voir dans le II)
 - Un compte Azure
 - Git d'installé
+- Installation de l'application IP Webcam
   
 ## II. Partie photo et transcription au format CSV 
 
-### a. Mise en place 
 #### Création de l'environnement virtuel :
 - Ouvrez votre terminal.
 Placez-vous dans le répertoire de votre projet où vous souhaitez créer l'environnement virtuel.
@@ -83,6 +83,8 @@ Vous devriez avoir apparaître la région et surtout la clé API, nécessaire au
 
 ![image](https://github.com/Jocor1n/Projet-IOT/assets/75179590/183065f5-2254-4f83-8958-85cd0c1bc6a9)
 
+En savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
+
 #### Créer un fichier .env et rajouter ces variables :
 ```shell
 API_KEY=VOTRE_API_KEY
@@ -91,6 +93,7 @@ ip_serv_TTN =IP_SERVEUR_TTN
 ip_serv_webcam=IP_WEBCAM_TELEPHONE:PORT
 image_directory=REPERTOIRE_POUR_ENREGISTRER_LES_IMAGES
 csv_file_path=REPERTOIRE_FICHIER_CSV
+devices_csv_file_path=REPERTOIRE_FICHIER_DEVICE_CSV
 app_name=NOM_APPLICATION_TTN
 ```
 
@@ -117,15 +120,17 @@ Image_recognition_csv.py
 Ensuite 3 commandes sont disponibles : 
 
 * ALT + s : Enregistrer un device en ayant la photo en temps réel sur le téléphone.
-![image_78](https://github.com/Jocor1n/Projet-IOT/assets/75179590/a7a2a129-d97b-4dd0-91b2-ada27f10412c)
+![téléchargement](https://github.com/Jocor1n/Projet-IOT/assets/75179590/80d47099-0fad-465f-88b7-c6243cabfc37)
 * ALT + r : Lire le fichier csv
 Exemple :
 ```shell
-Device ID: 01823582
-Device EUI: A840418181823582
-Application EUI: 8000000000000007
-Application Key: 6D188E6C8487FA39D26D3BE6D22D2B5E
-Network Session Key 563D2F53974383C53C2FBC168AF7BE22
-Application Session Key 8616495CDC8AE76A5AFFB19E2FE19B6C
+Device ID: 0182XXXX
+Device EUI: A840XXXXXXXXXXXX
+Application EUI: 8000XXXXXXXXXXXX
+Application Key: 6D18XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Network Session Key 563DXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Application Session Key 8616XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 * ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
+* ALT + v : Synchroniser toutes les images du répertoire des images
+* ALT + g : Enregistrer les devices d'une application dans un csv
