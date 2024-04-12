@@ -208,8 +208,8 @@ def add_device_to_TTN(ip_serv, dev_addr, dev_eui, apps_key, nets_key, app_key):
     device_id = f"{dev_addr.lower()}"
     
     create_device = to_create_device(ip_serv, dev_name, dev_addr, device_id, dev_eui, join_eui, app_name, apps_key, nets_key)
-    register_name_server = to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name)
-    register_application_server = to_register_name_server(device_id, dev_addr, dev_eui, join_eui, app_name, apps_key, nets_key)
+    register_name_server = to_register_name_server(device_id, dev_addr, dev_eui, join_eui, app_name)
+    register_application_server = to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name, apps_key, nets_key)
     register_join_server = to_register_join_server(device_id, dev_eui, join_eui, app_name, ip_serv, app_key)
     
     api_url=f"http://{ip_serv}/api/v3/applications/{app_name}/devices"
