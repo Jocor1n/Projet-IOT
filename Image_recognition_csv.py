@@ -7,7 +7,7 @@ from azure.cognitiveservices.vision.computervision.models import OperationStatus
 import time
 import csv
 import re
-import original
+import Register_device
 import datetime
 
 from dotenv import load_dotenv
@@ -188,7 +188,7 @@ def add_TTN(e):
         
         # Display the extracted data (optional) 
         for device_data in device_data_list:
-            original.add_device_to_TTN(ip_serv, device_data['device_id'], device_data['device_eui'], device_data['application_session_key'], device_data['network_session_key'],  device_data['application_key'])
+            Register_device.add_device_to_TTN(ip_serv, device_data['device_id'], device_data['device_eui'], device_data['application_session_key'], device_data['network_session_key'],  device_data['application_key'])
 
 def synchro_all_images_from_directory(e):
     if e.event_type == 'down' and e.name == 'v' and keyboard.is_pressed('alt'):
