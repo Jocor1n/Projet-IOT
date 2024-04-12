@@ -120,16 +120,16 @@ Image_recognition_csv.py
 Ensuite 3 commandes sont disponibles : 
 
 * ALT + s : Enregistrer un device en ayant la photo en temps réel sur le téléphone.
-![image_78](https://github.com/Jocor1n/Projet-IOT/assets/75179590/a7a2a129-d97b-4dd0-91b2-ada27f10412c)
+![téléchargement](https://github.com/Jocor1n/Projet-IOT/assets/75179590/80d47099-0fad-465f-88b7-c6243cabfc37)
 * ALT + r : Lire le fichier csv
 Exemple :
 ```shell
-Device ID: 01823582
-Device EUI: A840418181823582
-Application EUI: 8000000000000007
-Application Key: 6D188E6C8487FA39D26D3BE6D22D2B5E
-Network Session Key 563D2F53974383C53C2FBC168AF7BE22
-Application Session Key 8616495CDC8AE76A5AFFB19E2FE19B6C
+Device ID: 0182XXXX
+Device EUI: A840XXXXXXXXXXXX
+Application EUI: 8000XXXXXXXXXXXX
+Application Key: 6D18XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Network Session Key 563DXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Application Session Key 8616XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 * ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
 * ALT + v : Synchroniser toutes les images du répertoire des images
