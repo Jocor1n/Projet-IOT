@@ -98,19 +98,30 @@ app_name=NOM_APPLICATION_TTN
 ```
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
-<<<<<<< HEAD
-- Explication brève du code...
-Le fichier Register_device.py permet d'nregistrer un device LoraWAN sur un Network Server en utilisant l'API TTN (The Things Network).
-=======
 Documentation sur les [API TTN](https://www.thethingsindustries.com/docs/api/)
 - Utilisation des requêtes REST POST et PUT pour envoyer les données CSV vers TTN :
   - [POST Create device](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{end_device.ids.application_ids.application_id}devices-post)
   - [PUT Register device into NS, AS, Name Server](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{end_device.ids.application_ids.application_id}devices{end_device.ids.device_id}-put)
 - Utilisation des requêtes REST GET pour récupérer les données de TTN :
   - [GET devices](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{application_ids.application_id}devices-get)
->>>>>>> 59b916e16557a15156f7f679678e3133a3d2076a
 
 Éléments enregitrés sur le TTS pour OTAA via CSV :
+
+Le fichier Register_device.py permet d'enregistrer un device LoraWAN sur un Network Server en utilisant l'API TTN (The Things Network).  Il comprend des fonctions pour créer l'appareil, l'enregistrer sur le name server, l'application server et le serveur de join (network server).
+
+L'enregistrement du device sur le name server est une étape importante du processus d'enregistrement d'appareils sur TTN. Il permet au network server (join server) et à l'application server d'identifier le device et de communiquer avec lui.
+
+Le script comprend également une fonction pour ajouter le périphérique à TTN, qui vérifie si le périphérique existe déjà et le crée si ce n'est pas le cas.
+
+Ce script utilise la bibliothèque requests pour effectuer des requêtes HTTP à l'API TTN et la bibliothèque json pour sérialiser les données. Il utilise également des variables d'environnement pour stocker des informations sensibles telles que le nom de l'application, le jeton d'authentification et diverses clés.
+
+Il définit plusieurs fonctions pour créer des dictionnaires contenant les informations nécessaires à l'enregistrement de l'appareil sur le réseau TTN. Ces dictionnaires sont ensuite utilisés comme données pour les requêtes HTTP.
+La fonction add_device_to_TTN est la fonction principale qui relie le tout. Elle prend plusieurs paramètres tels que l'adresse IP du serveur, l'adresse de l'appareil, l'EUI de l'appareil et diverses clés. Elle crée ensuite les dictionnaires nécessaires et effectue les requêtes HTTP pour enregistrer l'appareil sur le réseau TTN.
+
+Enfin, le script inclut également une gestion des erreurs pour vérifier si l'appareil existe déjà et pour imprimer la réponse des requêtes API.
+
+Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
+
   
 * DevEUI : il s'agit d'un identifiant qui rend chaque objet normalement programmé en usine unique. Il n'est pas possible de modifier ce paramètre théoriquement
 * AppKey : il s'agit d'un secret partagé entre le périphérique et le réseau, qui sert à dériver les clés de session. Ce paramètre est sujet à modification.
