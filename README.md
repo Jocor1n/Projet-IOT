@@ -96,6 +96,7 @@ app_name=NOM_APPLICATION_TTN
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
 - Explication brève du code...
+Le fichier Register_device.py permet d'nregistrer un device LoraWAN sur un Network Server en utilisant l'API TTN (The Things Network).
 
 Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
   
