@@ -47,7 +47,7 @@ def to_create_device(ip_serv, dev_name, dev_addr, device_id, dev_eui, join_eui, 
           "lorawan_version":"1.0.3",
           "lorawan_phy_version":"1.0.3-a",
           "frequency_plan": "EU_863_870",
-          "activation_mode": "OTAA",
+          "activation_mode": "OTAA", #ou ABP si on veut utiliser ABP
           "join_server_address": f"{ip_serv}",
           "network_server_address":f"{ip_serv}",
           "application_server_address":f"{ip_serv}",
