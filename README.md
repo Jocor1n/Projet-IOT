@@ -129,3 +129,4 @@ Network Session Key 563D2F53974383C53C2FBC168AF7BE22
 Application Session Key 8616495CDC8AE76A5AFFB19E2FE19B6C
 ```
 * ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
+* ALT + v : Synchroniser toutes les images du répertoire des images
