@@ -15,7 +15,7 @@
 
 Cette procédure présente comment utiliser le code qui permet de prendre une photo d'une étiquette d'un device et de retranscrire au fortmat CSV les informations de celui-ci. Puis, il permet d'enregistrer le device défini dans le fichier CSV sur le network server (NS) TTN.
 Le NS utilisé ici, est un serveur TTS construit et fourni par Sylvain Montagny. Cependant, la requête utilisé pour enregistrer le device peut être utilisé sur un NS publique : TTN. 
-Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La première et la prise d'une photo de l'étiquette à l'aide d'un smartphone et sa transcription au format CSV. La seconde est la récupération des informations dans le fichier CSV et l'enregistrement du device sur TTS sur à l'aide de l'api REST.
+Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La première est la prise d'une photo de l'étiquette à l'aide d'un smartphone et sa transcription au format CSV. La seconde est la récupération des informations dans le fichier CSV et l'enregistrement du device sur TTS sur à l'aide de l'api REST.
 
 **PREREQUIS :** 
 - Utilitaire pour executer du code python (minimum version 3.8) 
@@ -24,10 +24,10 @@ Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La p
 - installation de différents package (à voir dans le II)
 - Un compte Azure
 - Git d'installé
+- Installation de l'application IP Webcam
   
 ## II. Partie photo et transcription au format CSV 
 
-### a. Mise en place 
 #### Création de l'environnement virtuel :
 - Ouvrez votre terminal.
 Placez-vous dans le répertoire de votre projet où vous souhaitez créer l'environnement virtuel.
