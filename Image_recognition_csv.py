@@ -8,6 +8,7 @@ import time
 import csv
 import re
 import original
+import datetime
 
 from dotenv import load_dotenv
 
@@ -111,10 +112,8 @@ def extract_text_and_save_to_csv(image_path, csv_file_path):
 def save_image(e):
     if e.event_type == 'down' and e.name == 's' and keyboard.is_pressed('alt'):
         image_path = os.path.join(installation_directory, "image.png")
-        counter = 1
-        while os.path.exists(image_path):
-            image_path = os.path.join(installation_directory, f"image_{counter}.png")
-            counter += 1
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        image_path = os.path.join(installation_directory, f"image_{timestamp}.png")
         cv2.imwrite(image_path, frame)
         print(f"Image enregistrée sous {image_path}")
         extract_text_and_save_to_csv(image_path, csv_file_path)  # Appeler la fonction pour extraire le texte de l'image après avoir enregistré l'image
@@ -155,8 +154,8 @@ def read_lines_csv(e):
             print("Device EUI:", device_data['device_eui'])
             print("Application EUI:", device_data['application_eui'])
             print("Application Key:", device_data['application_key'])
-            print("Network Session Key", device_data['network_session_key'])  # Add a newline between each device's data
-            print("Application Session Key", device_data['application_session_key'])
+            print("Network Session Key:", device_data['network_session_key'])  # Add a newline between each device's data
+            print("Application Session Key:", device_data['application_session_key'])
             
 def add_TTN(e):
     if e.event_type == 'down' and e.name == 'a' and keyboard.is_pressed('alt'):
@@ -190,14 +189,30 @@ def add_TTN(e):
         # Display the extracted data (optional) 
         for device_data in device_data_list:
             original.add_device_to_TTN(ip_serv, device_data['device_id'], device_data['device_eui'], device_data['application_session_key'], device_data['network_session_key'],  device_data['application_key'])
-                          
+
+def synchro_all_images_from_directory(e):
+    if e.event_type == 'down' and e.name == 'v' and keyboard.is_pressed('alt'):
+        for filename in os.listdir(installation_directory):
+            print(filename)
+            time.sleep(6)
+            if filename.endswith(".png") or  filename.endswith(".jpg"):
+                image_path = os.path.join(installation_directory, filename)
+                extract_text_and_save_to_csv(image_path, csv_file_path)
+        print(f"Synchronisation des images du dossier {installation_directory} terminée")
+
 # Connecter l'événement clavier à la fonction pour enregistrer l'image
 keyboard.on_press(save_image)
 keyboard.on_press(read_lines_csv)
 keyboard.on_press(add_TTN)
+keyboard.on_press(synchro_all_images_from_directory)
+
+print("ALT + s : Enregistrer un device en ayant la photo en temps réel sur le téléphone \n" +
+  "ALT + r : Lire le fichier CSV \n" +
+  "ALT + a : Envoyer les données du fichier CSV sur TTS, une gestion des duplicatas est activée \n" +
+  "ALT + v : Synchroniser les images du dossier des images")
 
 while True:
-    # Capture d'une trame de la webcam
+    # Capture d'une trame de la webcam       
     ret, frame = cap.read()
 
 # Libérer la capture

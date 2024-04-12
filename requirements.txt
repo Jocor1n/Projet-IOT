@@ -3,3 +3,4 @@ keyboard
 opencv-python
 requests
 python-dotenv
+msrest
