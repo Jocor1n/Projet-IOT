@@ -261,5 +261,3 @@ def get_devices_TTN(ip_serv, app_name,):
     api_url=f"http://{ip_serv}/api/v3/applications/{app_name}/devices"
     response = requests.get(api_url, headers=headers)
     return response.json()
-    
-    

@@ -98,6 +98,7 @@ app_name=NOM_APPLICATION_TTN
 ```
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
+<<<<<<< HEAD
 Documentation sur les [API TTN](https://www.thethingsindustries.com/docs/api/)
 - Utilisation des requêtes REST POST et PUT pour envoyer les données CSV vers TTN :
   - [POST Create device](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{end_device.ids.application_ids.application_id}devices-post)
@@ -118,6 +119,11 @@ Enfin, le script inclut également une gestion des erreurs pour vérifier si l'a
 
 Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
 **********************************************************
+=======
+- Explication brève du code...
+
+Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
+>>>>>>> 8dafbe9 (Test)
   
 * DevEUI : il s'agit d'un identifiant qui rend chaque objet normalement programmé en usine unique. Il n'est pas possible de modifier ce paramètre théoriquement
 * AppKey : il s'agit d'un secret partagé entre le périphérique et le réseau, qui sert à dériver les clés de session. Ce paramètre est sujet à modification.
