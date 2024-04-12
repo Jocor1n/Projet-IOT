@@ -15,13 +15,13 @@ from dotenv import load_dotenv
 
 load_dotenv()  
 
-#Region et API Azure
+# Région et API Azure
 region = 'westeurope'
 key = os.getenv('API_KEY')
 ip_serv = os.getenv('ip_serv_TTN')
 ip_serv_webcam = os.getenv('ip_serv_webcam')
 
-#Identifiants API Azure
+# Identifiants API Azure
 credentials = CognitiveServicesCredentials(key)
 client = ComputerVisionClient(
     endpoint="https://" + region + ".api.cognitive.microsoft.com/",
@@ -42,22 +42,22 @@ if not os.path.exists(installation_directory):
 
 # Fonction pour extraire le texte de l'image et le stocker dans un fichier CSV
 def extract_text_and_save_to_csv(image_path, csv_file_path):
-    # Use Read API to read text in image
+    # On utilise une API de lecture pour lire le texte dans une image
     with open(image_path, mode="rb") as image_data:
         read_op = client.read_in_stream(image_data, raw=True)
 
-        # Get the async operation ID so we can check for the results
+        # On obtient  l'identifiant de l'opération asynchrone afin que nous puissions vérifier les résultats.
         operation_location = read_op.headers["Operation-Location"]
         operation_id = operation_location.split("/")[-1]
 
-        # Wait for the asynchronous operation to complete
+        # On attend que l'opération asynchrone soit terminée
         while True:
             read_results = client.get_read_result(operation_id)
             if read_results.status not in [OperationStatusCodes.running, OperationStatusCodes.not_started]:
                 break
             time.sleep(1)
 
-        # If the operation was successfully, process the text line by line
+        # Si l'opération s'est déroulée avec succès, on traite le texte ligne par ligne
         if read_results.status == OperationStatusCodes.succeeded:
             text = ""
             for page in read_results.analyze_result.read_results:
@@ -71,7 +71,7 @@ def extract_text_and_save_to_csv(image_path, csv_file_path):
     # Recherche des correspondances dans la chaîne de caractères
     correspondances = re.search(pattern, text)
 
-    # Vérifier si le fichier CSV existe
+    # Vérifie si le fichier CSV existe
     file_exists = os.path.isfile(csv_file_path)
 
     # Si des correspondances sont trouvées, les enregistrer dans un fichier CSV
@@ -88,7 +88,7 @@ def extract_text_and_save_to_csv(image_path, csv_file_path):
                 fieldnames = ['DEV ADDR', 'DEV EUI', 'APP EUI', 'APP KEY', 'APPSKEY', 'NETSKEY']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
-                # Vérifier si le fichier est vide (s'il n'a pas encore d'en-tête)
+                # Vérifie si le fichier est vide (s'il n'a pas encore d'en-tête)
                 if os.stat(csv_file_path).st_size == 0:
                     writer.writeheader()  # Écrire l'en-tête uniquement si le fichier est vide
         
@@ -119,14 +119,14 @@ def save_image(e):
 
 def read_lines_csv(e):
     if e.event_type == 'down' and e.name == 'r' and keyboard.is_pressed('alt'):
-        # Initialize a list to store device data
+        # Initialise une liste pour stocker les données des appareils
         device_data_list = []
         
-        # Open the CSV file and read the data
+        # Ouvre le fichier CSV et lit les données
         with open(csv_file_path, mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                # Extract data from the current row
+                # Extrait les données de la ligne actuelle
                 device_id = row['DEV ADDR']
                 device_eui = row['DEV EUI']
                 application_eui = row['APP EUI']
@@ -134,7 +134,7 @@ def read_lines_csv(e):
                 network_session_key = row['NETSKEY']
                 application_session_key = row['APPSKEY']
                 
-                # Store the data in a dictionary
+                # Stocke les données dans un dictionnaire
                 device_data = {
                     'device_id': device_id,
                     'device_eui': device_eui,
@@ -144,10 +144,10 @@ def read_lines_csv(e):
                     'application_session_key': application_session_key
                 }
                 
-                # Add the device data to the list
+                # Ajoute les données de l'appareil à la liste
                 device_data_list.append(device_data)
         
-        # Display the extracted data (optional)
+        # Afficher les données extraites (facultatif)
         for device_data in device_data_list:
             print("Device ID:", device_data['device_id'])
             print("Device EUI:", device_data['device_eui'])
@@ -160,11 +160,11 @@ def add_TTN(e):
     if e.event_type == 'down' and e.name == 'a' and keyboard.is_pressed('alt'):
         device_data_list = []
         
-        # Open the CSV file and read the data
+        # Ouvre le fichier CSV et lit les données
         with open(csv_file_path, mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                # Extract data from the current row
+                # Extrait les données de la ligne actuelle
                 device_id = row['DEV ADDR']
                 device_eui = row['DEV EUI']
                 application_eui = row['APP EUI']
@@ -172,7 +172,7 @@ def add_TTN(e):
                 network_session_key = row['NETSKEY']
                 application_session_key = row['APPSKEY']
                 
-                # Store the data in a dictionary
+                # Stocke les données dans un dictionnaire
                 device_data = {
                     'device_id': device_id,
                     'device_eui': device_eui,
@@ -182,10 +182,10 @@ def add_TTN(e):
                     'application_session_key': application_session_key
                 }
                 
-                # Add the device data to the list
+                # Ajoute les données de l'appareil à la liste
                 device_data_list.append(device_data)
         
-        # Display the extracted data (optional) 
+        # Afficher les données extraites (optionnel) 
         for device_data in device_data_list:
             Register_device.add_device_to_TTN(ip_serv, device_data['device_id'], device_data['device_eui'], device_data['application_session_key'], device_data['network_session_key'],  device_data['application_key'])
 
@@ -202,13 +202,13 @@ def synchro_all_images_from_directory(e):
 def get_app_devices(e):
     if e.event_type == 'down' and e.name == 'g' and keyboard.is_pressed('alt'): 
         get_response = Register_device.get_devices_TTN(ip_serv, app_name)
-        # Ouvrir un fichier CSV en mode écriture
+        # Ouvre un fichier CSV en mode écriture
         with open(devices_csv_file_path, 'w', newline='') as csvfile:
-            # Définir les noms de colonnes
+            # Définit les noms de colonnes
             fieldnames = ['application_id', 'device_id', 'dev_eui', 'join_eui', 'created_at', 'updated_at']
-            # Créer un objet writer
+            # Crée un objet writer
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            # Écrire l'en-tête
+            # Écrit l'en-tête
             writer.writeheader()
             
             # Parcourir les données et écrire chaque ligne dans le fichier CSV
