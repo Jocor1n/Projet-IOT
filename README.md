@@ -90,11 +90,12 @@ En savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : 
 API_KEY=VOTRE_API_KEY
 auth_token=VOTRE_AUTH_TOKEN_TTN
 ip_serv_TTN =IP_SERVEUR_TTN
-ip_serv_webcam=IP_WEBCAM_TELEPHONE:PORT
+ip_serv_telephone=IP_TELEPHONE:PORT
 image_directory=REPERTOIRE_POUR_ENREGISTRER_LES_IMAGES
 csv_file_path=REPERTOIRE_FICHIER_CSV
 devices_csv_file_path=REPERTOIRE_FICHIER_DEVICE_CSV
 app_name=NOM_APPLICATION_TTN
+use_webcam=<TRUE or FALSE>
 ```
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
@@ -151,3 +152,4 @@ Application Session Key 8616XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 * ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
 * ALT + v : Synchroniser toutes les images du répertoire des images
 * ALT + g : Enregistrer les devices d'une application dans un csv
+* q : Quitter le programme 
