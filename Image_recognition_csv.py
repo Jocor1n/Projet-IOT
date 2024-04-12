@@ -33,9 +33,13 @@ url = f"http://{ip_serv_webcam}/video"
 # Capture vidéo
 cap = cv2.VideoCapture(url)
 
-# Répertoire d'installation pour enregistrer les images et le fichier csv
+# Répertoire d'installation pour enregistrer les images et les fichiers csv
 installation_directory = os.getenv('image_directory')
 csv_file_path = os.getenv('csv_file_path')
+devices_csv_file_path = os.getenv('devices_csv_file_path')
+
+# Nom de l'application pour récupérer les devices
+app_name = os.getenv('app_name')
 
 # Vérifier si le répertoire existe, sinon le créer
 if not os.path.exists(installation_directory):
@@ -200,16 +204,42 @@ def synchro_all_images_from_directory(e):
                 extract_text_and_save_to_csv(image_path, csv_file_path)
         print(f"Synchronisation des images du dossier {installation_directory} terminée")
 
+def get_app_devices(e):
+    if e.event_type == 'down' and e.name == 'g' and keyboard.is_pressed('alt'): 
+        get_response = Register_device.get_devices_TTN(ip_serv, app_name)
+        # Ouvrir un fichier CSV en mode écriture
+        with open(devices_csv_file_path, 'w', newline='') as csvfile:
+            # Définir les noms de colonnes
+            fieldnames = ['application_id', 'device_id', 'dev_eui', 'join_eui', 'created_at', 'updated_at']
+            # Créer un objet writer
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            # Écrire l'en-tête
+            writer.writeheader()
+            
+            # Parcourir les données et écrire chaque ligne dans le fichier CSV
+            for device in get_response['end_devices']:
+                writer.writerow({
+                    'application_id': device['ids']['application_ids']['application_id'],
+                    'device_id': device['ids']['device_id'],
+                    'dev_eui': device['ids']['dev_eui'],
+                    'join_eui': device['ids']['join_eui'],
+                    'created_at': device['created_at'],
+                    'updated_at': device['updated_at']
+                })
+        print("Les données ont été enregistrées dans 'devices.csv'")
+
 # Connecter l'événement clavier à la fonction pour enregistrer l'image
 keyboard.on_press(save_image)
 keyboard.on_press(read_lines_csv)
 keyboard.on_press(add_TTN)
 keyboard.on_press(synchro_all_images_from_directory)
+keyboard.on_press(get_app_devices)
 
 print("ALT + s : Enregistrer un device en ayant la photo en temps réel sur le téléphone \n" +
   "ALT + r : Lire le fichier CSV \n" +
   "ALT + a : Envoyer les données du fichier CSV sur TTS, une gestion des duplicatas est activée \n" +
-  "ALT + v : Synchroniser les images du dossier des images")
+  "ALT + v : Synchroniser les images du dossier des images\n" +
+  "ALT + g : Récupérer les devices de l'application dans un csv")
 
 while True:
     # Capture d'une trame de la webcam       

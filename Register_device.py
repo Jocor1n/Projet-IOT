@@ -255,7 +255,11 @@ def add_device_to_TTN(ip_serv, dev_addr, dev_eui, apps_key, nets_key, app_key):
     else:
         print("Failed to retrieve device information. Status code:", response2.status_code)
         
-        
-    
+
+# Requête GET pour avoir la liste des devices d'une appli dans un csv
+def get_devices_TTN(ip_serv, app_name,):
+    api_url=f"http://{ip_serv}/api/v3/applications/{app_name}/devices"
+    response = requests.get(api_url, headers=headers)
+    return response.json()
     
     
