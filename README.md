@@ -83,6 +83,8 @@ Vous devriez avoir apparaître la région et surtout la clé API, nécessaire au
 
 ![image](https://github.com/Jocor1n/Projet-IOT/assets/75179590/183065f5-2254-4f83-8958-85cd0c1bc6a9)
 
+En savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
+
 #### Créer un fichier .env et rajouter ces variables :
 ```shell
 API_KEY=VOTRE_API_KEY
