@@ -47,7 +47,7 @@ def to_create_device(ip_serv, dev_name, dev_addr, device_id, dev_eui, join_eui, 
           "lorawan_version":"1.0.3",
           "lorawan_phy_version":"1.0.3-a",
           "frequency_plan": "EU_863_870",
-          "activation_mode": "OTAA",
+          "activation_mode": "OTAA", #ou ABP si on veut utiliser ABP
           "join_server_address": f"{ip_serv}",
           "network_server_address":f"{ip_serv}",
           "application_server_address":f"{ip_serv}",
@@ -72,6 +72,7 @@ def to_create_device(ip_serv, dev_name, dev_addr, device_id, dev_eui, join_eui, 
              "lorawan_phy_version",
              "activation_mode",
              "frequency_plan_id",
+             "frequency_plan",
              "version_ids.frequency_plan_id",
              "version_ids.lorawan_version",
              "version_ids.regional_parameters_version","version_ids.band_id",
@@ -142,7 +143,7 @@ def to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name):
           "device_address": f"{dev_addr}",
           "application_ids": {
              "application_id": f"{app_name}"
-          },
+          }
           #"keys": {
           #   "apps_key": f"{apps_key}",
           #   "nwk_key": f"{nets_key}"
@@ -156,7 +157,6 @@ def to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name):
              "ids.dev_eui",
              "ids.join_eui",
              "ids.application_ids.application_id",
-             "version_ids.band_id",
              "application_server_address"
           ]
        }

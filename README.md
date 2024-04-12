@@ -90,16 +90,17 @@ En savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : 
 API_KEY=VOTRE_API_KEY
 auth_token=VOTRE_AUTH_TOKEN_TTN
 ip_serv_TTN =IP_SERVEUR_TTN
-ip_serv_webcam=IP_WEBCAM_TELEPHONE:PORT
+ip_serv_telephone=IP_TELEPHONE:PORT
 image_directory=REPERTOIRE_POUR_ENREGISTRER_LES_IMAGES
 csv_file_path=REPERTOIRE_FICHIER_CSV
 devices_csv_file_path=REPERTOIRE_FICHIER_DEVICE_CSV
 app_name=NOM_APPLICATION_TTN
+use_webcam=<TRUE or FALSE>
 ```
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
-<<<<<<< HEAD
-Documentation sur les [API TTN](https://www.thethingsindustries.com/docs/api/)
+
+**Documentation sur les [API TTN](https://www.thethingsindustries.com/docs/api/):**
 - Utilisation des requêtes REST POST et PUT pour envoyer les données CSV vers TTN :
   - [POST Create device](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{end_device.ids.application_ids.application_id}devices-post)
   - [PUT Register device into NS, AS, Name Server](https://www.thethingsindustries.com/docs/api/reference/http/routes/#applications{end_device.ids.application_ids.application_id}devices{end_device.ids.device_id}-put)
@@ -117,13 +118,7 @@ La fonction add_device_to_TTN est la fonction principale qui relie le tout. Elle
 
 Enfin, le script inclut également une gestion des erreurs pour vérifier si l'appareil existe déjà et pour imprimer la réponse des requêtes API.
 
-Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
-**********************************************************
-=======
-- Explication brève du code...
-
-Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :
->>>>>>> 8dafbe9 (Test)
+**Éléments enregitrés sur le TTS pour OTAA et/ou ABP via CSV :**
   
 * DevEUI : il s'agit d'un identifiant qui rend chaque objet normalement programmé en usine unique. Il n'est pas possible de modifier ce paramètre théoriquement
 * AppKey : il s'agit d'un secret partagé entre le périphérique et le réseau, qui sert à dériver les clés de session. Ce paramètre est sujet à modification.
@@ -157,3 +152,4 @@ Application Session Key 8616XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 * ALT + a : Envoyer les données du fichier csv sur TTS, une gestion des duplicatas est activée
 * ALT + v : Synchroniser toutes les images du répertoire des images
 * ALT + g : Enregistrer les devices d'une application dans un csv
+* q : Quitter le programme 
