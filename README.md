@@ -29,8 +29,10 @@ Ce code ce construit en 2 grande partie qui seront présentées ci-dessous. La p
 ## II. Partie photo et transcription au format CSV 
 
 #### Création de l'environnement virtuel :
+- Créer un dossier de travail sur l'explorateur de fichier
+
 - Ouvrez votre terminal.
-Placez-vous dans le répertoire de votre projet où vous souhaitez créer l'environnement virtuel.
+Placez-vous dans le répertoire de travail, où vous souhaitez créer l'environnement virtuel.
 
 Utilisez la commande suivante pour créer l'environnement virtuel :
 ```shell
@@ -50,11 +52,7 @@ Sur macOS et Linux :
 ```shell
 source <nom_de_l'environnement>/bin/activate
 ```
-Ensuite vous pouvez télécharger et installer les dépendances requises, exécutez la commande suivante dans votre terminal :
 
-```shell
-pip install -r requirements.txt
-```
 #### Clone du projet Git
 
 Vous pouvez cloner le projet Git en utilisant la commande :
@@ -68,33 +66,51 @@ Ou avec SSH :
 ```shell
 git clone git@github.com:Jocor1n/Projet-IOT.git
 ```
+Ensuite vous pouvez télécharger et installer les dépendances requises, exécutez la commande suivante dans votre terminal :
 
+```shell
+pip install -r requirements.txt
+```
 #### Application :
 Il faut que votre ordinateur et votre téléphone soit sur le même réseau Internet, si ce n'est pas le cas, mettez votre ordinateur en point d'accès sans fil mobile et connecter votre téléphone sur ce même réseau.
-Sur votre téléphone, installer l'application IP Webcam.
+Sur votre téléphone, installer l'application **IP Webcam**.
 Une fois lancée, cliquer sur démarrer le serveur, récupérer l'IP et le port utilisé pour plus tard.
 
 #### Azure : 
 
-Connectez-vous sur votre compte Azure. Dans la barre de recherche, recherchez : Vision par ordinateur. Une fois sélectionnée, créer une vision par ordinateur. Remplissez tout d'abord, les détails du projet en choisissant un abonnement et un groupe de ressources. Puis choisir les détails de l'instance avec une région et un nom. Pour le niveau tarifaire, dans notre cas, on va utiliser la version gratuite où vous pouvez faire 20 appels par minute et 5 mille appels par mois avec cette API. Ce qui est grandement suffisant. 
-Vous devriez avoir apparaître la région et surtout la clé API, nécessaire au fonctionnement de notre code. Comme ceci :
+Connectez-vous sur votre compte Azure (utilisation d'un compte étudiant). Dans la barre de recherche, recherchez : **Vision par ordinateur**. 
+Une fois sélectionnée, créer une vision par ordinateur. 
+
+![azurevision](https://github.com/Jocor1n/Projet-IOT/assets/166696882/2de32d21-463c-4716-a8dc-1002b258d3e3)
+
+Remplissez tout d'abord, les détails du projet en choisissant un abonnement (student) et un groupe de ressources (créer un nouveau si besoin). Puis choisir les détails de l'instance avec une région (west europe) et un nom (à choisir).
+
+![crea_new_vision](https://github.com/Jocor1n/Projet-IOT/assets/166696882/33f1f49c-3e6c-4fcd-920d-de4ad8aff124)
+
+Pour le niveau tarifaire, dans notre cas, on va utiliser la version gratuite où vous pouvez faire 20 appels par minute et 5 mille appels par mois avec cette API. Ce qui est largement suffisant. 
+
+Vous devriez voir apparaître la région et surtout la clé API, nécessaire au fonctionnement de notre code. Comme ceci :
 
 ![image](https://github.com/Jocor1n/Projet-IOT/assets/75179590/183065f5-2254-4f83-8958-85cd0c1bc6a9)
 
-En savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
+Pour savoir plus sur les conditions générales d'utilisation d'Azure AI Vision : https://azure.microsoft.com/fr-fr/products/ai-services/ai-vision
 
-#### Créer un fichier .env et rajouter ces variables :
+#### Créer un fichier .env (dans le même répertoire que le code téléchargé depuis git) et rajouter ces variables :
 ```shell
-API_KEY=VOTRE_API_KEY
-auth_token=VOTRE_AUTH_TOKEN_TTN
+API_KEY=VOTRE_API_KEY # CLE 1 sur Azure
+auth_token=VOTRE_AUTH_TOKEN_TTN # Clé API de l'application sur TTN
 ip_serv_TTN =IP_SERVEUR_TTN
-ip_serv_telephone=IP_TELEPHONE:PORT
-image_directory=REPERTOIRE_POUR_ENREGISTRER_LES_IMAGES
-csv_file_path=REPERTOIRE_FICHIER_CSV
-devices_csv_file_path=REPERTOIRE_FICHIER_DEVICE_CSV
-app_name=NOM_APPLICATION_TTN
-use_webcam=<TRUE or FALSE>
+ip_serv_telephone=IP_TELEPHONE:PORT # Affiché à l'ouverture de l'application
+image_directory=CHEMIN_REPERTOIRE_POUR_ENREGISTRER_LES_IMAGES\images # à choisir
+csv_file_path=REPERTOIRE_FICHIER_CSV\import.csv # à choisir
+devices_csv_file_path=REPERTOIRE_FICHIER_DEVICE_CSV\export.csv # à choisir
+app_name=NOM_APPLICATION_TTN # nom de l'application sur votre serveur TTN 
+use_webcam=<TRUE or FALSE> # mettre TRUE si utilisation de la webcam 
 ```
+
+Clé API TTN : ATTENTION la clé API n'est visible qu'une seule fois lors de sa création !
+
+![apikey](https://github.com/Jocor1n/Projet-IOT/assets/166696882/60d301cd-4a0b-4f89-9d61-6584b897145e)
 
 ## III. Partie envoi des données CSV sur TTN avec REST 
 
@@ -127,7 +143,13 @@ Enfin, le script inclut également une gestion des erreurs pour vérifier si l'a
 
 ## IV. Méthode d'utilisation 
 
-- Pour enregistrer un device, il faut avoir l'application IP Webcam d'ouvert avec le serveur démarré. Une fois démarré, vous pouvez exécuter le programme principal sur l'environnement virtuel :
+- Pour enregistrer un device, il faut avoir l'application IP Webcam d'ouvert ou une webcam avec le serveur démarré.
+
+**ATTENTION :** si vous utilisez une webcam selon le type, le focus peut être long à ce faire, cliquer sur l'image affiché à l'écran avec la souris pour le focus.
+
+**À Savoir :** Les images peuvent être prise indpendament et ajouté au dossier "\images" manuellement. Le code interprétera ensuite ces images. 
+
+- Une fois démarré, vous pouvez exécuter le programme principal sur l'environnement virtuel :
   
 ```shell
 Image_recognition_csv.py
