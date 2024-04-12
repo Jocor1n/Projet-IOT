@@ -71,7 +71,7 @@ def to_create_device(ip_serv, dev_name, dev_addr, device_id, dev_eui, join_eui, 
              "lorawan_version",
              "lorawan_phy_version",
              "activation_mode",
-             "frequency_plan_id",
+             "frequency_plan",
              "version_ids.frequency_plan_id",
              "version_ids.lorawan_version",
              "version_ids.regional_parameters_version","version_ids.band_id",
@@ -142,7 +142,7 @@ def to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name):
           "device_address": f"{dev_addr}",
           "application_ids": {
              "application_id": f"{app_name}"
-          },
+          }
           #"keys": {
           #   "apps_key": f"{apps_key}",
           #   "nwk_key": f"{nets_key}"
@@ -156,7 +156,6 @@ def to_register_app_server(device_id, dev_addr, dev_eui, join_eui, app_name):
              "ids.dev_eui",
              "ids.join_eui",
              "ids.application_ids.application_id",
-             "version_ids.band_id",
              "application_server_address"
           ]
        }
@@ -254,8 +253,3 @@ def add_device_to_TTN(ip_serv, dev_addr, dev_eui, apps_key, nets_key, app_key):
            add_to_TTN()
     else:
         print("Failed to retrieve device information. Status code:", response2.status_code)
-        
-        
-    
-    
-    
